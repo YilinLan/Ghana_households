@@ -39,7 +39,7 @@ library(purrr)
 library(tidyverse)
 library(stringi)
 library(kableExtra)
-setwd("~/Desktop")
+setwd("~/Desktop/Ghana_households/inputs")
 all_content<-pdf_text("FR59.pdf")
 # Get page 41
 just_page_i<-stri_split_lines(all_content[[41]])[[1]] 
@@ -144,7 +144,7 @@ data$name <- name_of_table
 data$page <- 18
 
 data1<-data[,c(15,1:14,16,17)]
-write_csv(data1,"row_data.csv")
+write_csv(data1,"~/Desktop/Ghana_households/inputs/data/raw_data.csv")
 ```
 
 ```{r,message=FALSE, echo=FALSE,warning=FALSE,include=FALSE}
@@ -252,6 +252,7 @@ According to the content of the paper, it widely expands our horizon about the w
   Though our paper discusses housing characteristics and aims to give further comments on Ghana’s infrastructure, the data table we have is from year 1993, which is very old. The situation in the country may change much nowadays. Thus, our comments may be not very useful in today. \
 	The table we got only describe the percentage not the exact number. We are not able to know the total number of households that have electricity and the total number of households that use spring as their drinking water. We can’t get a general sense of the total number.\
 	There are limited number of data when we convert the PDF table into dataset so that when we draw the scatterplot, it is hard for us to investigate the trend between different variables.
+
 
 
 \newpage

@@ -1,0 +1,258 @@
+---
+title: "Household characteristics in urban and rural area in Ghana"
+author: "Xuetong Tang, Yilin Lan, Lida Liu"
+date: 04/10/2022
+output:
+  bookdown::pdf_document2:
+    latex_engine: lualatex
+  tufte::tufte_handout:
+    latex_engine: xelatex
+abstract: "The Worldwide Demographic and Health Survey Program would like to know the economic and environmental household characteristics in Ghana in 1993. Therefore, with the support of U.S. Agency and the Ghana government, the Ghana Statistical Service has surveyed the specific economic and environmental household characteristics about the distribution of the source of water in regions, the sanitation facilities conditions, the use of flooring materials in different regions and the population densities in different region. In a reproducible way, we obtained a table that containing the results of the survey, and we analyze the specific conditions of the household characteristics in the past."
+bibliography: ref_list.bib
+thanks: "Code and data are available at: LINK."
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+\newpage
+# Introduction
+According to the report of the findings of the 1993 Ghana Demographic and Health Survey conducted by Ghana Statistical Service, the economic and environmental characteristics of households are illustrated in one table. To be more specific, the table reveals the distribution of the source of water in regions, the sanitation facilities conditions, the use of flooring materials in different regions and the population densities in different region [@h].
+
+From the table that the Ghana Statistical Service has created, about 35 percent of the households used piped water as their main source of water, while approximately 31 percent of the households used well water as their main source of water. Moreover, there were about 27 percent of the households getting water from nature, like springs, river, stream, and rainwater. From another point of view, Upper East region and Upper West region’s main major source of water were depending on well water, while the piped water was being used by the Greater Accra and Central regions [@h].
+	
+For the sanitation facilities, there were only 6 percent of the households that had flush toilets, and the majority of households were using latrines. In urban areas, there were about 8 percent of the households that do not have toilet facilities, while there were about 31 percent of the household that do not have toilet facilities. Moreover, in the three northern regions, about 75 to 89 percent of people had no access to private or public toilet facilities at all [@h].
+
+For the living part, cement is the main material for flooring in house units, and the second most important flooring material is vinyl and linoleum in urban area, while in rural area the second important area is the earth and dung. To be more specific, only region of Upper West had over 50 percent of flooring that is natural. For the population density, there are 2.5 persons per sleeping room in Ghana no matter they were from rural or urban areas. Region of Upper East has the lowest population density and Brong-Ahafo has the highest population density [@h].
+
+The paper would be consisted of mainly three parts, which are data part, result part and the discussion part. In the data part, the analysis of the data about some specific economic and environmental characteristics of Ghana in 1993 would be conducted, and the results of the analysis would be shown in the result part. Ultimately, the discussion about the phenomenon we analyzed before is going to be revealed in the discussion part at the end of the paper.
+	
+All the data analysis in this paper uses R studio [@a] with tidyverse [@b], janitor [@c], ggplot2 [@d], kableExtra [@e], purrr [@g] and pdftools [@f] packages.
+
+```{r,message=FALSE, echo=FALSE,warning=FALSE,include=FALSE}
+library(janitor)
+library(pdftools)
+library(purrr)
+library(tidyverse)
+library(stringi)
+library(kableExtra)
+setwd("~/Desktop")
+all_content<-pdf_text("FR59.pdf")
+# Get page 41
+just_page_i<-stri_split_lines(all_content[[41]])[[1]] 
+# Delete empty lines
+just_page_i<-just_page_i[just_page_i != ""] 
+# Derive categorical lines
+catagory<-just_page_i[c(6,10,22,30,40)]|>str_squish()
+# Derive name of the table
+name_of_table<-just_page_i[1]|>str_squish()
+# Derive data part of the table
+just_page_i_data<-just_page_i[7:(length(just_page_i)-1)]
+```
+
+```{r,message=FALSE, echo=FALSE, warning=FALSE,include=FALSE}
+# Convert into tibble
+data<-tibble(all=just_page_i_data)
+# Change column and row names
+data <-data |>
+  mutate(all = str_squish(all)) |> # Any space more than two spaces is reduced
+  mutate(all = str_replace(all, "Source of drinking w a te r", "Source-of-drinking-water")) |> 
+  mutate(all = str_replace(all, "West-em", "Western")) |>
+  mutate(all = str_replace(all, "East_era", "Eastern")) |> 
+  mutate(all = str_replace(all, "North_em", "Northern")) |>
+  mutate(all = str_replace(all, "Brong-ahafo", "Brong_Ahafo")) |>
+  mutate(all = str_replace(all, "Greater accra", "Greater_Accra")) |>
+  mutate(all = str_replace(all, "Upper West", "UpperWest")) |>
+  mutate(all = str_replace(all, "Upper East", "UpperEast")) |>
+  mutate(all = str_replace(all, "Piped into residence", "Piped-into-residence"))|>
+  mutate(all = str_replace(all, "Missing/Don't know", "Missing/Don't-know")) |> 
+  mutate(all = str_replace(all, "Mean persons per room", "Mean-persons-per-room")) |> 
+  mutate(all = str_replace(all, "N u m b e r of households", "Number-of-households")) |> 
+  mutate(all = str_replace(all, "Persons per sleeping room", "Persons-per-sleeping-room")) |> 
+  mutate(all = str_replace(all, "Parquet/Polished wood", "Parquet/Polished-wood")) |> 
+  mutate(all = str_replace(all, "Earth/Dung floor", "Earth/Dung-floor")) |> 
+  mutate(all = str_replace(all, "Vent. imp. pit latrine", "Vent.imp.pitlatrine")) |> 
+  mutate(all = str_replace(all, "No facility/Bush ", "No-facility/Bush ")) |> 
+  mutate(all = str_replace(all, "Public well", "Public-well")) |> 
+  mutate(all = str_replace(all, "Sanitation facility", "Sanitation-facility")) |> 
+  mutate(all = str_replace(all, "Own flush toilet", "Own-flush-toilet")) |> 
+  mutate(all = str_replace(all, "Shared flush toilet", "Shared-flush-toilet")) |> 
+  mutate(all = str_replace(all, "Traditional pit latrine", "Traditional-pit-latrine")) |> 
+  mutate(all = str_replace(all, "Public tap/Neighbour", "Public-tap/Neighbour")) |> 
+  mutate(all = str_replace(all, "Well in residence", "Well-in-residence")) |> 
+  mutate(all = str_replace(all, "Wood planks/Bamboo ", "Wood-planks/Bamboo ")) |> 
+  mutate(all = str_replace(all, "Floor material", "Floor-material")) |> 
+  mutate(all = str_replace(all, "Ceramic tiles", "Ceramic-tiles")) |>
+
+# Split columns
+  separate(col = all,
+           into = c("Characteristics","Urban", "Rural", "Western", "Central", "Greater_Accra", "Volta", "Eastern", "Ashanti","Brong_Ahafo","Northern","UpperWest","UpperEast","Total"),
+           sep = " ",
+           remove = TRUE,
+           fill = "right",
+           extra = "drop"
+  )
+
+# Add a categorical column
+data<-data|>add_column(category="")
+data$category[1:3]<-"Electricity"
+data$category[5:15]<-"Source of drinking water"
+data$category[17:23]<-"Sanitation facility"
+data$category[25:33]<-"Floor material"
+data$category[35:40]<-"Persons per sleeping room"
+data$category[41:42]<-"Summary"
+
+# Remove the original categorical variables
+data = na.omit(data)
+```
+
+
+```{r,message=FALSE, echo=FALSE,warning=FALSE}
+# Mannual adjust some wrong numbers in the dataset
+data$Urban[data$Urban == "+"] <- 2.5
+data$Western[data$Western == "I00.0"] <- 100.0
+data$Central[data$Central == "I00.0"] <- 100.0
+data$Volta[data$Volta == "lO0.O"] <- 100.0
+data$Central[data$Central == "0:6"] <- 0.6
+data$Greater_Accra[data$Greater_Accra == "20,2"] <- 20.5
+data$Greater_Accra[data$Greater_Accra == "12,5"] <- 12.5
+data$Eastern[data$Eastern == "100,0"] <- 100.0
+data$Eastern[data$Eastern == "2,3"] <- 2.3
+data$Ashanti[data$Ashanti == "21,6"] <- 21.6
+data$Brong_Ahafo[data$Brong_Ahafo == "1,0"] <- 1.0
+data$Western[data$Western == "2.5"] <- 2.9
+data$Central[data$Central == "2.9"] <- 3.3
+data$Greater_Accra[data$Greater_Accra == "3.3"] <- 1.7
+data$Volta[data$Volta == "1.7"] <- 2.3
+data$Eastern[data$Eastern == "2.3"] <- 1.8
+data$Ashanti[data$Ashanti == "1.8"] <- 2.8
+data$Brong_Ahafo[data$Brong_Ahafo == "2.8"] <- 5.6
+data$Northern[data$Northern == "5.6"] <- 0.9
+data$UpperWest[data$UpperWest == "0.9"] <- 0
+data$Total[data$Total == "0.3"] <- 2.5
+
+
+# Change the variable type of line 2-14 from character to numeric 
+data <-
+  data |>
+  mutate_at(vars(c(2:14)), ~as.numeric(.))
+
+data$name <- name_of_table
+data$page <- 18
+
+data1<-data[,c(15,1:14,16,17)]
+write_csv(data1,"row_data.csv")
+```
+
+```{r,message=FALSE, echo=FALSE,warning=FALSE,include=FALSE}
+library(pointblank)
+
+agent <-
+  create_agent(tbl = data1) |>
+  col_is_character(column = vars(category, Characteristics, name)) |>
+  col_is_numeric(columns = vars(Urban, Rural, Western, Central, Greater_Accra, Volta, Eastern, Ashanti, Brong_Ahafo, Northern, UpperWest, UpperEast, Total, page)) |>
+  col_vals_in_set(columns = category,
+                  set = c("Electricity", "Source of drinking water", "Sanitation facility", "Floor material","Persons per sleeping room", "Summary")) |>
+  interrogate()
+agent
+                    
+
+```
+
+\newpage
+# Data
+## Methodology
+The economy of Ghana is mixed and contained lot of small, unregulated business between 1975 to 1982. The GDP is growing at a rate of -0.5% due to poor management of fiscal and monetary policy. To improve the economy the government started the Economy Recover Program (ERP). The data we choose collect the household characteristics in Ghana in 1993. The 1993 GDHS is a stratified, representative sample that chose from 400 Enumeration Area. Then, the frame was divided into three ecological zones, including urban and rural areas. The EA was selected with probability proportional to the number of households. The survey was design to collect data from 5400 females aged 15-49 and 5400 males aged 15-49. The way that they collect data is to use questionnaire.
+The questionnaire was first developed in English and then translated into five local languages. People were required to provide information about the education level, household information, health etc. The questionnaires were filled and sent to Head office. Then, the data was edit by the data entry operator. At last, three professional data analyzation staff are performing second editing for the data and the final table was generate at 1994, March. For the response rate, 6161 household were selected and 5919 household were able to complete the interview. For the rest of the household, the staff had visited their house for several times but they were not at home. 
+
+## Data cleaning
+
+For the data cleaning part, we first read the table from the PDF to RStudio. Then, we change the variable names and remove some unnecessary spaces between the words. Then, we turn the table into a dataset. For the dataset, we compare it with the table on the PDF and fixed some small problem in the data. For example, we fixed “6,5” into “6.5”. At last, we only select the row and column we needed for the data analyzation. All the variable counts for total was removed.
+
+\newpage
+## Data visualization
+
+```{r,message=FALSE, echo=FALSE,warning=FALSE, fig1, fig.cap = "Boxplots showing the medium difference between precentage of rural residence and different categorical variables"}
+data2<-data1[-c(3,14,21,30,36,37,38),]
+data2 %>% ggplot(aes(y=Urban, x=category))+geom_boxplot()+coord_flip()
+```
+
+The boxplot above \@ref(fig:fig1) aims to analysis the median of the percentage in each catogory in our table of interest. First, from the plot we find that the median of source of drinking water is very low with a relative small variance, which represents that the water source of each urban households is very different. There's no evident preference or usage of one kind of water source.\
+
+In contrast, from the boxplot for the category, persons per sleeping room, through it also has a low median, its variance is much larger. This shows that the majority of urban residence may usually have a certain range of number of persons per sleeping room.
+
+\newpage
+
+```{r,message=FALSE, echo=FALSE,fig2, fig.cap = "Scatterplots showing the distribution between urban and rural area with different categorical variables",fig.height=3}
+data3<-data2[c(1:12),]
+ggplot(data3,aes(Urban,Rural,group=category,color=category,shape=category))+geom_point(size=4)
+```
+
+```{r,message=FALSE, echo=FALSE,fig3, tab.cap = "A summary table of electricity and source of drinking water in urban and rural area"}
+data3<-data2[c(1:12),c(1:4)]
+data3%>%
+  knitr::kable(caption = "The data summary in electricity and source of drinking water in urban and rural area")%>%
+    kable_styling(latex_options="HOLD_position")
+```
+
+The scatterplot \@ref(fig:fig2) and table \@ref(tab:fig3) above discusses the difference in residents' source of drinking water and electricity in urban and rural area. From the plot, we find that there's much difference in use of electricity in urban and rural area. The percentage of having electricity in urban area is 74.6% while in rural area is only 6%. This significant difference shows that the infrastructure of utility in rural area is very insufficient.\
+
+What's more, we also can see much information regarding to the source of water of residents in rural and urban area. From the table, we see that there’s only 2% residents in rural area who have water directly piped into residence. The majority, 36% residents in rural area still use river and stream water while 26% residents in rural area use water from borehole. On the other hand, the water source of residents in urban area is very different. Majority of residents in urban area use water with public-tap or water piped directly into their residence. The two ways of water use covers over 70% of urban residents. 37% of residents have water piped into residence while 38.6% of residents use public tap.\
+
+
+
+```{r,message=FALSE, echo=FALSE,fig4, fig.cap = "Scatterplots showing the distribution between urban and rural area with different categorical variables",fig.height=3}
+data4<-data2[c(13:26),]
+ggplot(data4,aes(Urban,Rural,group=category,color=category,shape=category))+geom_point(size=4)
+```
+
+```{r,message=FALSE, echo=FALSE, fig5, tab.cap = "A summary table showing the sanitation facility and floor material in urban and rural area"}
+data4<-data2[c(13:26),c(1:4)]
+data4%>%
+  knitr::kable(caption = "The data summary in sanitation facility and floor material in urban and rural area")%>%
+    kable_styling(latex_options="HOLD_position")
+```
+The scatterplot \@ref(fig:fig4) and table \@ref(tab:fig5) above show the difference in sanitation and floor material of urban population and rural population. From the table, we could see that the majority of residents in rural area, 59% are using traditional-pit-latrine while in urban area, though 29.2% of residents are also using traditional-pit-latrine. 27.8% of residents have been using Vent.imp.pitlatrine, which is more advanced.\
+
+What’s more, for floor material, both majority of residents in rural area and urban area use cement as floor material. The difference is that in rural area, 22% of residents are still using Earth/Dung-floor while in urban area, only 0.8% uses Earth/Dung-floor.
+
+
+\newpage
+# Result
+## Linear relationship betwween urban and rural area
+```{r,message=FALSE, echo=FALSE,fig6,echo=FALSE,message=FALSE,warning=FALSE, fig.cap = "Regression model showing the relationship between rural and urban area  with different categorical variables",fig.height=4}
+data5<-data2[c(13:26),c(1:4)]
+data5%>%ggplot(aes(x=Urban,y=Rural,color=category))+geom_point()+geom_smooth(method=lm)
+```
+
+To track the relationship between urban resident’s housing characteristics and rural resident’s housing characteristics, we generate the simple regression model \@ref(fig:fig6) above, with red line represents floor material and blue line represents sanitation facility. The regression line shows the relationship of percentage of housing characteristics between urban and rural area. From the regression lines, we find that they both show positive relationship between the percentages of housing characteristics of urban residents and rural residents. This finding implies that the facility in rural area follow the development in urban area. It is saying that for one kind of advanced floor material sanitation facility, as more households in urban area use it, more households in rural area also follow the trend to use it.
+
+\newpage
+## Linear relationship betwween urban and rural area
+```{r,message=FALSE, echo=FALSE, fig7, fig.cap = "Regression model showing the relationship between rural and urban area in water quality ",fig.height=4}
+data6<-data2[c(1:12),c(1:4)]
+ggplot(data6,aes(x=Urban,y=Rural))+geom_point()+geom_smooth(method=lm)
+```
+
+In the second result graph, we build linear regression \@ref(fig:fig7) of the percentage of different source of drinking water between urban and rural area. From the plot, we find that there’s no significant relationship. This shows that the use of water in rural and urban area is completely different. While households in urban area tend to use more advanced water facility, households in rural area are still using some old ways to get water. Regarding to what we have discussed in previous data section, we know that majority of residents in rural area tend to use water from river and stream. Borehole is also a common choice for residents in rural area. On the other hand, it is common for residents in urban area to have water piped into residence. 
+
+# Discussion
+## Overview and result
+In this paper, we analyze the distribution of different housing characteristics in urban and rural area. We first extract the table of housing characteristics form the report of demographic and health survey 1993. By reproduce the table, we are able to conduct further analysis. In Data section, we basically analysis the data of electricity, source of drinking water, floor material and sanitation facility with scatterplot and summary tables. In result section, we do simpler linear regression on urban and rural areas’ percentage of different kind of housing facilities to have further discussion on the possible relationship. \
+	In data section, by comparing the percentage of different kind of housing characteristics, we find that urban area has more advanced facility comparing to rural area. For instance, the source of drinking water in urban area is by piping directly into residence while in some rural area, residents are still using river or stream water. As for the other important housing characteristic, electricity, 94% of residents in rural area don’t have electricity. This show that the supply of electricity and infrastructure of electricity in rural area is very insufficient. For sanitation facility, a larger proportion of households in rural area are using traditional pit latrine compared to rural area. About 10% of residents in urban area are even using own-flush-toilet, which is a kind of advanced toilet. What’s more, for floor material, majority of residents in both rural and urban area are using cement floor. There’s not much difference in floor material selection. \ 
+	In result section, we generate regression model to discuss the relationship of different housing characteristics between rural and urban area. The positive relationship between the percentages of housing characteristics of urban residents and rural residents indicates that for floor material and sanitation facility, rural area is following the infrastructure development trend of urban area. As urban area uses more advanced flooring material and sanitation facility, rural area also began to use these advanced facilities. On the other hand, we don’t recognize any significant relationship of source of drinking water between urban and rural areas. This is quite reasonable since the environment and construction in urban and rural area is very different. In rural area, people can get river water and stream water directly since they are closer to nature. In contrast, urban area is full of high buildings which need piped water. \
+
+## Future development
+According to the content of the paper, it widely expands our horizon about the world. Honestly, we are shocked by the immature infrastructures of the developing country in Africa in the past. The households of the African developing country were terrible in 1993, and nowadays, some of the fundamental facilities in Ghana still need to be improved, and some of the Ghanaian are still live in poverty. For example, 43 percent of the total population are still living in rural areas, and 29 percent of the jobs are within agriculture [@i].  Moreover, 43 percent of Ghanaian do not have accounts in financial institutions like bank and 13.3 percent of people live on less than 1.9 dollars per day.  Overall, the phenomenon of the Ghanaian condition is still not optimistic.  Therefore, we could develop some method for them to improve their economic condition. For instance, the Ghana government could provide loan to the farmers to invest their agricultural business, especially providing them with skills of planting and harvesting cocoa trees, because the cocoa trees are appropriate to live based on their local environment [@i]. Secondly, government should provide the parents in the country with more income, so that their children could have a better educational environment, because education always means less poverty [@i].  In addition, the government could pay more attention to the rural areas and provide people there with mobile technology, in order to let them be accessible to the bank system. The modern technology is a efficient way of boosting economy in Ghana [@i].
+
+## Limitations
+  Though our paper discusses housing characteristics and aims to give further comments on Ghana’s infrastructure, the data table we have is from year 1993, which is very old. The situation in the country may change much nowadays. Thus, our comments may be not very useful in today. \
+	The table we got only describe the percentage not the exact number. We are not able to know the total number of households that have electricity and the total number of households that use spring as their drinking water. We can’t get a general sense of the total number.\
+	There are limited number of data when we convert the PDF table into dataset so that when we draw the scatterplot, it is hard for us to investigate the trend between different variables.
+
+
+\newpage
+# Reference

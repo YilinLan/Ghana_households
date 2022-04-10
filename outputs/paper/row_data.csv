@@ -1,0 +1,39 @@
+category,Characteristics,Urban,Rural,Western,Central,Greater_Accra,Volta,Eastern,Ashanti,Brong_Ahafo,Northern,UpperWest,UpperEast,Total,name,page
+Electricity,Yes,74.6,6,26.4,29.6,80.4,8.5,26.6,38.3,19.1,11.3,10.3,10.3,30.6,Table 2.9 Housing characteristics,18
+Electricity,No,25.4,94,73.6,70.4,19.6,91.5,73.4,61.7,80.9,88.7,89.7,89.7,69.4,Table 2.9 Housing characteristics,18
+Electricity,Total,100,100,100,100,100,100,100,100,100,100,100,100,100,Table 2.9 Housing characteristics,18
+Source of drinking water,Piped-into-residence,37.2,2,11.7,9.7,51.6,2.7,9.3,17.4,4.1,5.3,2.9,11,14.6,Table 2.9 Housing characteristics,18
+Source of drinking water,Public-tap/Neighbour,38.6,10.8,13.6,37,37.7,16.6,19.1,21.6,15,11.1,3.4,4.2,20.8,Table 2.9 Housing characteristics,18
+Source of drinking water,Well-in-residence,2.1,1.4,2,0.4,0.7,1.5,1.6,1.1,1.7,3.2,5.7,2.9,1.6,Table 2.9 Housing characteristics,18
+Source of drinking water,Public-well,7.9,12.3,17.4,7.5,2.3,12.5,14.7,6.2,11.8,15.6,8,19.7,10.7,Table 2.9 Housing characteristics,18
+Source of drinking water,Borehole,3.7,26.6,12.7,15.4,1.7,15.2,11.6,20,23.9,19.7,52.9,57.4,18.4,Table 2.9 Housing characteristics,18
+Source of drinking water,Spring,0.5,0.9,0.6,0.1,0,1,0.9,0.7,1,2.1,1.1,0.3,0.7,Table 2.9 Housing characteristics,18
+Source of drinking water,River/Stream,5.8,36.6,40.9,19,0.3,30.3,38,30.4,36.9,22,16.1,3.2,25.6,Table 2.9 Housing characteristics,18
+Source of drinking water,Rainwater,0.7,0.9,0.6,1,0.6,4.4,0.8,0.1,0.5,0.2,0,0,0.8,Table 2.9 Housing characteristics,18
+Source of drinking water,Other,3.2,5.8,0.4,7.3,3,8.7,1.6,1.3,4.1,19.9,9.8,1.3,4.8,Table 2.9 Housing characteristics,18
+Source of drinking water,Missing/Don't-know,0.3,2.8,0.2,2.5,2.1,7.1,1.8,1.1,1,0.9,0,0,1.9,Table 2.9 Housing characteristics,18
+Source of drinking water,Total,100,100,100,100,100,100,100,100,100,100,100,100,100,Table 2.9 Housing characteristics,18
+Sanitation facility,Own-flush-toilet,10.3,0.5,2.2,1.8,18.8,0.6,2.6,2.3,0.7,0.4,1.7,7.1,4,Table 2.9 Housing characteristics,18
+Sanitation facility,Shared-flush-toilet,5.3,0.4,4.8,0.6,7.4,0,1.4,2.5,0.9,0,0,0,2.1,Table 2.9 Housing characteristics,18
+Sanitation facility,Traditional-pit-latrine,29.2,59.5,59.3,60.6,31.9,57.6,61.7,60.1,63,13.5,11.5,1,48.6,Table 2.9 Housing characteristics,18
+Sanitation facility,Vent.imp.pitlatrine,27.8,7.2,12.5,9.1,20.5,12.7,17.3,21.7,18.1,3,11.5,1.3,14.6,Table 2.9 Housing characteristics,18
+Sanitation facility,Bucket/Ban,19.2,1.7,6.1,8.7,12.5,4.8,11.9,8,10.8,3.2,0.6,1.9,8,Table 2.9 Housing characteristics,18
+Sanitation facility,No-facility/Bush,8.3,30.6,15.2,19.3,9.2,24.3,5,5.4,6.7,79.9,74.7,88.7,22.6,Table 2.9 Housing characteristics,18
+Sanitation facility,Total,100,100,100,100,100,100,100,100,100,100,100,100,100,Table 2.9 Housing characteristics,18
+Floor material,Earth/Dung-floor,0.8,22.1,19.8,11.9,1.1,21.4,13.5,9.3,14.7,15.4,51.7,27.1,14.5,Table 2.9 Housing characteristics,18
+Floor material,Wood-planks/Bamboo,0.6,0.1,0.6,0.6,0.4,0.8,0.1,0.1,0,0,0,0.3,2.5,Table 2.9 Housing characteristics,18
+Floor material,Parquet/Polished-wood,0.1,0,0,0,0.3,0,0,0.1,0,0,0,0,0.1,Table 2.9 Housing characteristics,18
+Floor material,Vinyl/Linoleum/Asphalt,31.7,3,11.2,8.4,31.9,0.6,10.6,22.8,13.3,3.6,0.6,1.9,13.3,Table 2.9 Housing characteristics,18
+Floor material,Ceramic-tiles,1.9,0.1,0.4,0.1,3.7,0.4,0.3,0.6,0.3,0.4,0,0,0.8,Table 2.9 Housing characteristics,18
+Floor material,Cement,58.8,73.6,62.6,78.2,51.7,75.5,74,64.5,71.3,79.9,47.1,69.7,68.3,Table 2.9 Housing characteristics,18
+Floor material,Other,6,1,5.5,0.7,10.7,1.2,1.4,2.6,0.3,0.4,0,1,2.8,Table 2.9 Housing characteristics,18
+Floor material,Missing/Don't-know,0,0.1,0,0,0,0.2,0.1,0,0,0.2,0.6,0,0.1,Table 2.9 Housing characteristics,18
+Floor material,Total,100,100,100,100,100,100,100,100,100,100,100,100,100,Table 2.9 Housing characteristics,18
+Persons per sleeping room,1-2,60,60.4,57.1,55.1,61.7,61.5,62,55.1,52.6,70.5,66.7,80.3,60.2,Table 2.9 Housing characteristics,18
+Persons per sleeping room,3-4,27.1,27.5,27.3,28.2,26.5,27.4,27.4,30.6,30.2,24.4,27,16.1,27.4,Table 2.9 Housing characteristics,18
+Persons per sleeping room,5-6,10.1,9.5,12.7,13.3,10,8.5,8.7,11.5,11.1,3.4,6.3,2.9,9.7,Table 2.9 Housing characteristics,18
+Persons per sleeping room,7,2.5,2.5,2.9,3.3,1.7,2.3,1.8,2.8,5.6,0.9,0,0,2.5,Table 2.9 Housing characteristics,18
+Persons per sleeping room,Missing/Don't-know,0.3,0.2,0,0.1,0,0.4,0.1,0.1,0.5,0.9,0,0.3,0.2,Table 2.9 Housing characteristics,18
+Persons per sleeping room,Total,100,100,100,100,100,100,100,100,100,100,100,100,100,Table 2.9 Housing characteristics,18
+Summary,Mean-persons-per-room,2.5,2.6,2.6,2.8,2.4,2.6,2.4,2.7,2.9,2.3,2.3,2,2.5,Table 2.9 Housing characteristics,18
+Summary,Number-of-households,2089,3733,545,670,698,519,773,1079,586,468,174,310,5822,Table 2.9 Housing characteristics,18

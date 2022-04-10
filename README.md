@@ -1,1 +1,3 @@
-# Ghana_households
+# Household characteristics in urban and rural area
+
+The Worldwide Demographic and Health Survey Program would like to know the economic and environmental household characteristics in Ghana in 1993. Therefore, with the support of U.S. Agency and the Ghana government, the Ghana Statistical Service has surveyed the specific economic and environmental household characteristics about the distribution of the source of water in regions, the sanitation facilities conditions, the use of flooring materials in different regions and the population densities in different region. In a reproducible way, we obtained a table that containing the results of the survey, and we analyze the specific conditions of the household characteristics in the past
